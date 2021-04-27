@@ -1,0 +1,12 @@
+
+########################################
+#Masked Channels
+MaskedEast 
+MaskedWest 
+# Pulser 0 to turn off and revert to Earliest East / West with no pulsers
+PulserOnOff 0
+NoiseCorr 0
+PulserMeansEast 817 1039 1006 783
+PulserMeansWest 1127 1020 946 881
+RefEast 11
+RefWest 11
