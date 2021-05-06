@@ -8,6 +8,7 @@
 #include <TH2F.h>
 
 #include <math.h>
+#include <memory>
 
 
 // This is the one PlotSet that is guarenteed to always exist
@@ -17,6 +18,7 @@
 // It has no plots (currently)
 //
 
+class Strip2CH;
 
 class fttBuilder : public JevpBuilder {
  public:
@@ -33,27 +35,30 @@ class fttBuilder : public JevpBuilder {
     }
   }
 
-  void ReadConfig();
-
   // Histo declarations!
   union {
     TH1 *array[];
     struct {
-      TH1 *ADC;
-      TH1 *ADCZoom;
-      TH2 *tac_east_vs_tac_west;
-      //   TH2 *vertex_vs_l3_vertex;
-      TH2 *earliestTAC_vs_eastchan;
-      TH2 *earliestTAC_vs_westchan;
-      
-      TH2 *hi_cdb[4];
-      TH2 *hi_tac_east_vs_tac_west;
-      //  TH2 *hi_vertex_vs_l3_vertex;
-      TH2 *hi_earliestTAC_vs_eastchan;
-      TH2 *hi_earliestTAC_vs_westchan;
+        // TPX electronics
+        TH1 *tpxADC;
+        TH1 *tpxADCZoom;
 
-      TH2 *tac_align_east;
-      TH2 *tac_align_west;
+        TH1 *tpxFEE;
+        TH1 *tpxALTRO;
+        TH1 *tpxCHANNEL;
+        // TH2 *tpxFEEALTRO;
+        TH2 *tpxALTROCHANNEL;
+        TH2 *tpxLayerRowStrip[2];
+        TH2 *tpxLayerRowStripADC[2];
+        TH2 *tpxLayerRowTimebinStripADC[6];
+        TH2 *tpxTimebinStrip;
+        TH2 *tpxTimebinADC;
+        TH1 *tpxNStripsFired;
+        // TH2 *tpxLayer2RowStrip;
+        
+        // VMM electronics
+        TH1 *ADC;
+        TH1 *ADCZoom;
     };
   } contents;
 
@@ -62,10 +67,14 @@ class fttBuilder : public JevpBuilder {
   void stoprun(daqReader *rdr);
   void event(daqReader *rdr);
 
-  vector<string> readTokenVector( TString &str );
-  vector<int> readIntVector( TString &str, int start = 0 );
+  void processVMM(daqReader *rdr);
+  void processTPX(daqReader *rdr);
 
   static void main(int argc, char *argv[]);
+
+#ifndef __CINT__
+  shared_ptr<Strip2CH> tpxMapLayer1, tpxMapLayer2;
+#endif
 
   ClassDef(fttBuilder, 1);
 };
