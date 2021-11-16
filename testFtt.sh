@@ -3,4 +3,5 @@
 # /star/u/jdb/work/ssw/stgc-raw-hit-reader/stgc.daq
 
 #-confdatadir /star/u/jdb/work/OnlineJevp/jevp
-OnlTools/Jevp/launch fttBuilder -confdatadir ./jevp -file input.daq -pdf fttBuilder.pdf  -firstevt 0 -lastevt 20000
+OnlTools/Jevp/launch fttBuilder -confdatadir ./jevp -file input.daq -pdf fttBuilder.pdf 
+# -firstevt 0 -lastevt 5000
